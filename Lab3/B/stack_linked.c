@@ -1,122 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+struct Node
+{
     int data;
     struct Node *next;
 };
 
-struct Node *top = NULL;
 
-void display() {
-    struct Node *temp;
-
-    if (top == NULL) {
-        printf("Stack is empty.\n");
-        return;
-    }
-
-    printf("Stack elements: ");
-
-    temp = top;
-
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
-    }
-
-    printf("\n");
-}
-
-void push() {
-    int value;
-
-    printf("Enter value to push: ");
-    scanf("%d", &value);
-
+struct Node *push(struct Node *top, int value)
+{
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-
-    if (newNode == NULL) {
-        printf("Memory allocation failed!\n");
-        return;
-    }
-
     newNode->data = value;
     newNode->next = top;
     top = newNode;
-
-    printf("%d pushed to stack.\n", value);
-    display();
+    return top;
 }
 
-void pop() {
-    struct Node *temp;
-
-    if (top == NULL) {
-        printf("Stack Underflow!\n");
-        return;
+struct Node * pop(struct Node * top) 
+{
+    if (top==NULL) 
+  {
+        printf("Stack Underflow! Cannot pop\n");
+        return NULL; 
     }
-
-    temp = top;
-
-    printf("%d popped from stack.\n", top->data);
-
-    top = top->next;
-
-    free(temp);
-
-    display();
+   else 
+  {
+   struct Node *newNode;
+   newNode=top;
+   top=top->next;
+   free(newNode);
+    return top;
+   }
 }
 
-void peek() {
-    if (top == NULL) {
-        printf("Stack is empty.\n");
-        return;
-    }
 
-    printf("Top element: %d\n", top->data);
-    display();
+void display(struct Node *top)
+{
+    struct Node *temp = top;
+    while (temp != NULL)
+    {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
 }
 
-int main() {
-    int choice;
+int main()
+{
+    struct Node *stack = NULL; 
 
-    while (1) {
-        printf("\n--- Stack Menu ---\n");
-        printf("1. Push\n");
-        printf("2. Pop\n");
-        printf("3. Peek\n");
-        printf("4. Display\n");
-        printf("5. Exit\n");
+    
+    stack = push(stack, 10);
+    stack = push(stack, 20);
+    stack = push(stack, 30);
 
-        printf("Enter choice: ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                push();
-                break;
-
-            case 2:
-                pop();
-                break;
-
-            case 3:
-                peek();
-                break;
-
-            case 4:
-                display();
-                break;
-
-            case 5:
-                printf("Exiting...\n");
-                return 0;
-
-            default:
-                printf("Invalid choice!\n");
-        }
-    }
+    
+    printf("Stack: ");
+    display(stack);
+   
+    stack=pop(stack);
+    display(stack);
 
     return 0;
 }

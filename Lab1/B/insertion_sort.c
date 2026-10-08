@@ -26,7 +26,7 @@ void printArray(int arr[], int n) {
 }
 
 int main() {
-    int arr[] = {12, 11, 13, 5, 6};
+    int arr[] = {20, 50, 10, 70, 40};
     int n = sizeof(arr) / sizeof(arr[0]);
 
     printf("Original array:\n");
